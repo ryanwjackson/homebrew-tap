@@ -1,8 +1,8 @@
 class Gtr < Formula
   desc "Git worktree helper"
   homepage "https://github.com/ryanwjackson/gtr"
-  url "https://github.com/ryanwjackson/gtr/releases/download/v0.1.5/gtr-v0.1.5.tar.gz"
-  sha256 "34f39383ea8a83f818e3be2b57015e2b2d458fd3f8922291cd79ca571b180739"
+  url "https://github.com/ryanwjackson/gtr/releases/download/v0.1.6/gtr-v0.1.6.tar.gz"
+  sha256 "e4d9510304a748ce74747fb3cc36b47d7aa43c1a18a6689482f41993bcbfdc3e"
   license "MIT"
   head "https://github.com/ryanwjackson/gtr.git", branch: "main"
 

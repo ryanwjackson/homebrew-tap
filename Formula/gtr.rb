@@ -8,6 +8,7 @@ class Gtr < Formula
 
   def install
     bin.install "bin/gtr"
+    lib.install Dir["lib/*.sh"]
     man1.install "man/man1/gtr.1" if File.exist?("man/man1/gtr.1")
     zsh_completion.install "completions/_gtr" if File.exist?("completions/_gtr")
     bash_completion.install "completions/gtr.bash" if File.exist?("completions/gtr.bash")

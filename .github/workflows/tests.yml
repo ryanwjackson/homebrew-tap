@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-bot:
     strategy:
@@ -30,6 +34,26 @@ jobs:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ matrix.os }}-rubygems-
+
+      - name: Cache Homebrew repositories
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.set-up-homebrew.outputs.repository-path }}/Library/Taps/homebrew/homebrew-core
+            ${{ steps.set-up-homebrew.outputs.repository-path }}/Library/Taps/homebrew/homebrew-cask
+          key: ${{ matrix.os }}-homebrew-taps-${{ github.run_id }}
+          restore-keys: |
+            ${{ matrix.os }}-homebrew-taps-
+
+      - name: Cache Homebrew downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            ~/.cache/Homebrew
+          key: ${{ matrix.os }}-homebrew-cache-${{ hashFiles('Formula/**/*.rb') }}
+          restore-keys: |
+            ${{ matrix.os }}-homebrew-cache-
 
       - run: brew test-bot --only-cleanup-before
 
